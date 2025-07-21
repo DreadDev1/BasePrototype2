@@ -3,13 +3,24 @@
 
 #include "Characters/EnemyCharacter.h"
 
+#include "BasePrototype/BasePrototype.h"
+
+
+AEnemyCharacter::AEnemyCharacter()
+{
+	GetMesh()->SetCollisionResponseToChannel(HighlightTraceChannel, ECR_Block);
+}
 
 void AEnemyCharacter::HighlightActor()
 {
-	bHighlighted = true;
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	Weapon->SetRenderCustomDepth(true);
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 }
 
 void AEnemyCharacter::UnHighlightActor()
 {
-	bHighlighted = false;
+	GetMesh()->SetRenderCustomDepth(false);
+	Weapon->SetRenderCustomDepth(false);
 }
