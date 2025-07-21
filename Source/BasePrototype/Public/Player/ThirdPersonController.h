@@ -13,4 +13,17 @@ UCLASS()
 class BASEPROTOTYPE_API AThirdPersonController : public ABasePlayerController
 {
 	GENERATED_BODY()
+
+public:
+
+protected:
+	virtual void SetupInputComponent() override;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Inputs|Input Mapping Context")
+	TArray<TObjectPtr<UInputMappingContext>> TPIMC;
+
+	void Interact();
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Inputs|Input Actions")
+	TObjectPtr<UInputAction> InteractAction;
 };

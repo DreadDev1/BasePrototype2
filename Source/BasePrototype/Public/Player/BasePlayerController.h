@@ -21,7 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
 	TEnumAsByte<ECollisionChannel> HighlightTraceChannel;
 	
 private:
