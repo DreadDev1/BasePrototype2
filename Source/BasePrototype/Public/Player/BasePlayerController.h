@@ -20,6 +20,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	TEnumAsByte<ECollisionChannel> HighlightTraceChannel;
+	
 private:
 
    	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Inputs|Input Mapping Context")
@@ -32,4 +36,5 @@ private:
     void Look(const FInputActionValue& InputActionValue);
     UPROPERTY(EditDefaultsOnly, Category="Base Prototype|Inputs|Input Actions")
     TObjectPtr<UInputAction> LookAction;
+	
 };
