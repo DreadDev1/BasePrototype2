@@ -21,6 +21,4 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 	
 	void CursorTrace();
-	TScriptInterface<IHighlightInterface> LastActor;
-	TScriptInterface<IHighlightInterface> ThisActor;
 };

@@ -20,6 +20,11 @@
 			"TargetAllowList": [
 				"Editor"
 			]
+		},
+		{
+			"Name": "Inventory",
+			"Enabled": true
 		}
+		
 	]
 }

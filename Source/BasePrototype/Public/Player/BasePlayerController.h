@@ -10,9 +10,7 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 class UBaseHUD;
-/**
- * 
- */
+class IHighlightInterface;
 
 UCLASS()
 class BASEPROTOTYPE_API ABasePlayerController : public APlayerController
@@ -27,6 +25,17 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
 	TEnumAsByte<ECollisionChannel> HighlightTraceChannel;
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
+	TEnumAsByte<ECollisionChannel> ItemTraceChannel;
+	
+	TScriptInterface<IHighlightInterface> LastActor;
+	TScriptInterface<IHighlightInterface> ThisActor;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Widgets|HUD")
+	TSubclassOf<UBaseHUD> HUDWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UBaseHUD> HUDWidget;
 	
 private:
 
@@ -41,11 +50,5 @@ private:
     void Look(const FInputActionValue& InputActionValue);
     UPROPERTY(EditDefaultsOnly, Category="Base Prototype|Inputs|Input Actions")
     TObjectPtr<UInputAction> LookAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Widgets|HUD")
-	TSubclassOf<UBaseHUD> HUDWidgetClass;
-
-	UPROPERTY()
-	TObjectPtr<UBaseHUD> HUDWidget;
 	
 };
