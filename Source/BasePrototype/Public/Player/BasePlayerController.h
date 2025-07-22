@@ -9,6 +9,10 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class UBaseHUD;
+/**
+ * 
+ */
 
 UCLASS()
 class BASEPROTOTYPE_API ABasePlayerController : public APlayerController
@@ -26,6 +30,7 @@ protected:
 	
 private:
 
+	void CreateHUDWidget();
    	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Inputs|Input Mapping Context")
    	TArray<TObjectPtr<UInputMappingContext>> DefaultIMCs;
    	
@@ -36,5 +41,11 @@ private:
     void Look(const FInputActionValue& InputActionValue);
     UPROPERTY(EditDefaultsOnly, Category="Base Prototype|Inputs|Input Actions")
     TObjectPtr<UInputAction> LookAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Widgets|HUD")
+	TSubclassOf<UBaseHUD> HUDWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UBaseHUD> HUDWidget;
 	
 };
