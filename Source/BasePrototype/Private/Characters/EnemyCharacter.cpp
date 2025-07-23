@@ -8,7 +8,7 @@
 
 AEnemyCharacter::AEnemyCharacter()
 {
-	GetMesh()->SetCollisionResponseToChannel(HighlightTraceChannel, ECR_Block);
+
 }
 
 void AEnemyCharacter::HighlightActor()

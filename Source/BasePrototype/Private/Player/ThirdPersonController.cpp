@@ -2,11 +2,10 @@
 
 
 #include "Player/ThirdPersonController.h"
-
 #include "EnhancedInputComponent.h"
-#include "Items/Components/Inv_ItemComponent.h"
+#include "Interaction/HighlightInterface.h"
 #include "Kismet/GameplayStatics.h"
-#include "Widgets/HUD/BaseHUD.h"
+
 
 AThirdPersonController::AThirdPersonController()
 {
@@ -25,6 +24,7 @@ void AThirdPersonController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	TraceForItem();
+	TraceForCharacter();
 }
 
 void AThirdPersonController::TraceForItem()
@@ -38,30 +38,56 @@ void AThirdPersonController::TraceForItem()
 	if (!UGameplayStatics::DeprojectScreenToWorld(this, ViewportCenter, TraceStart, Forward)) return;
 
 	const FVector TraceEnd = TraceStart + Forward * TraceLength;
-	FHitResult HitResult;
-	GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ItemTraceChannel);
+	FHitResult ItemHitResult;
+	GetWorld()->LineTraceSingleByChannel(ItemHitResult, TraceStart, TraceEnd, ItemTraceChannel);
 
 	LastActor = ThisActor;
-	ThisActor = HitResult.GetActor();
-
-	if (!ThisActor.IsValid())
-	{
-		if (IsValid(HUDWidget)) HUDWidget->HidePickupMessage();
-	}
+	ThisActor = ItemHitResult.GetActor();
 
 	if (ThisActor == LastActor) return;
-
-	if (ThisActor.IsValid())
+	
+	if (ThisActor)
 	{
-		UInv_ItemComponent* ItemComponent = ThisActor->FindComponentByClass<UInv_ItemComponent>();
-		if (!IsValid(ItemComponent)) return;
+		ThisActor->HighlightActor();
+		UE_LOG(LogTemp, Warning, TEXT("Found actor implementing HighlightInterface"));
+	}
+	
+	if (LastActor)
+	{
+		LastActor->UnHighlightActor();
+		UE_LOG(LogTemp, Warning, TEXT("Stopped tracing last actor."))
+	}
+}
 
-		if (IsValid(HUDWidget)) HUDWidget->ShowPickupMessage(ItemComponent->GetPickupMessage());
+void AThirdPersonController::TraceForCharacter()
+{
+	if (!IsValid(GEngine) || !IsValid(GEngine->GameViewport)) return;
+	FVector2D ViewportSize;
+	GEngine->GameViewport->GetViewportSize(ViewportSize);
+	const FVector2D ViewportCenter = ViewportSize / 2.f;
+	FVector TraceStart;
+	FVector Forward;
+	if (!UGameplayStatics::DeprojectScreenToWorld(this, ViewportCenter, TraceStart, Forward)) return;
+
+	const FVector TraceEnd = TraceStart + Forward * TraceLength;
+	FHitResult CharacterHitResult;
+	GetWorld()->LineTraceSingleByChannel(CharacterHitResult, TraceStart, TraceEnd, HighlightTraceChannel);
+
+	LastCharacter = ThisCharacter;
+	ThisCharacter = CharacterHitResult.GetActor();
+
+	if (ThisCharacter == LastCharacter) return;
+
+	if (ThisCharacter)
+	{
+		ThisCharacter->HighlightActor();
+		UE_LOG(LogTemp, Warning, TEXT("Started tracing current character."))
 	}
 
-	if (LastActor.IsValid())
+	if (LastCharacter)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Stopped tracing last actor."))
+		LastCharacter->UnHighlightActor();
+		UE_LOG(LogTemp, Warning, TEXT("Stopped tracing last character."))
 	}
 }
 

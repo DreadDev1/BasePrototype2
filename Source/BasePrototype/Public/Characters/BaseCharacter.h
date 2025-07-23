@@ -22,7 +22,4 @@ protected:
 	class USpringArmComponent* CameraBoom;
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	class UCameraComponent* FollowCamera;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
-	TEnumAsByte<ECollisionChannel> HighlightTraceChannel;
 };

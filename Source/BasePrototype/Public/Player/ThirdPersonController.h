@@ -6,9 +6,8 @@
 #include "BasePlayerController.h"
 #include "ThirdPersonController.generated.h"
 
-/**
- * 
- */
+class ABaseCharacter;
+
 UCLASS()
 class BASEPROTOTYPE_API AThirdPersonController : public ABasePlayerController
 {
@@ -21,10 +20,15 @@ protected:
 	virtual void SetupInputComponent() override;
 	virtual void Tick(float DeltaSeconds) override;
 	void TraceForItem();
+	void TraceForCharacter();
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
 	double TraceLength;
-	TWeakObjectPtr<AActor> ThisActor;
-	TWeakObjectPtr<AActor> LastActor;
+	TScriptInterface<IHighlightInterface> ThisActor;
+	TScriptInterface<IHighlightInterface> LastActor;
+	// Character trace variables
+	TScriptInterface<IHighlightInterface> ThisCharacter;
+	TScriptInterface<IHighlightInterface> LastCharacter;
+
 private:
 
 	void Interact();
