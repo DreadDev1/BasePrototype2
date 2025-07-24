@@ -34,41 +34,10 @@ void ATopDownController::CursorTraceCharacter()
 	LastCharacter = ThisCharacter;
 	ThisCharacter = CursorHit.GetActor();
 
-	if (LastCharacter == nullptr)
-	{
-		if (ThisCharacter != nullptr)
-		{
-			// Case B
-			ThisCharacter->HighlightActor();
-		}
-		else
-		{
-			// Case A - both are null, do nothing
-		}
-	}
-	else // LastActor is valid
-	{
-		if (ThisCharacter == nullptr)
-		{
-			// Case C
-			LastCharacter->UnHighlightActor();
-		}
-		else // both actors are valid
-		{
-			if (LastCharacter != ThisCharacter)
-			{
-				// Case D
-				LastCharacter->UnHighlightActor();
-				ThisCharacter->HighlightActor();
-			}
-			else
-			{
-				// Case E - do nothing
-			}
-		}
-	}
+	if (ThisCharacter == LastCharacter) return;
+	if (ThisCharacter) { ThisCharacter->HighlightActor(); }
+	if (LastCharacter) { LastCharacter->UnHighlightActor(); }
 }
-
 void ATopDownController::CursorTraceItem()
 {
 	FHitResult CursorHitItem;
@@ -78,38 +47,7 @@ void ATopDownController::CursorTraceItem()
 	LastItem = ThisItem;
 	ThisItem = CursorHitItem.GetActor();
 
-
-	if (LastItem == nullptr)
-	{
-		if (ThisItem!= nullptr)
-		{
-			// Case B
-			ThisItem->HighlightActor();
-		}
-		else
-		{
-			
-		}
-	}
-	else // LastActor is valid
-	{
-		if (ThisItem == nullptr)
-		{
-			// Case C
-			LastItem->UnHighlightActor();
-		}
-		else // both actors are valid
-		{
-			if (LastItem != ThisItem)
-			{
-				// Case D
-				LastItem->UnHighlightActor();
-				ThisItem->HighlightActor();
-			}
-			else
-			{
-				// Case E - do nothing
-			}
-		}
-	}
+	if (ThisItem == LastItem) return;
+	if (ThisItem) { ThisItem->HighlightActor(); }
+	if (LastItem) { LastItem->UnHighlightActor(); }
 }

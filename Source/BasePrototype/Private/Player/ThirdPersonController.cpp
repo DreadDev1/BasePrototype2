@@ -27,64 +27,58 @@ void AThirdPersonController::Tick(float DeltaSeconds)
 	TraceForCharacter();
 }
 
-void AThirdPersonController::TraceForItem()
+bool AThirdPersonController::PerformLineTraceForItem(FHitResult& ItemHitResult)
 {
-	if (!IsValid(GEngine) || !IsValid(GEngine->GameViewport)) return;
+	if (!IsValid(GEngine) || !IsValid(GEngine->GameViewport)) return true;
 	FVector2D ViewportSize;
 	GEngine->GameViewport->GetViewportSize(ViewportSize);
 	const FVector2D ViewportCenter = ViewportSize / 2.f;
 	FVector TraceStart;
 	FVector Forward;
-	if (!UGameplayStatics::DeprojectScreenToWorld(this, ViewportCenter, TraceStart, Forward)) return;
+	if (!UGameplayStatics::DeprojectScreenToWorld(this, ViewportCenter, TraceStart, Forward)) return true;
 
 	const FVector TraceEnd = TraceStart + Forward * TraceLength;
-	FHitResult ItemHitResult;
 	GetWorld()->LineTraceSingleByChannel(ItemHitResult, TraceStart, TraceEnd, ItemTraceChannel);
+	return false;
+}
+void AThirdPersonController::TraceForItem()
+{
+	FHitResult ItemHitResult;
+	if (PerformLineTraceForItem(ItemHitResult)) return;
 
 	LastItem = ThisItem;
 	ThisItem = ItemHitResult.GetActor();
 
 	if (ThisItem == LastItem) return;
-	
-	if (ThisItem)
-	{
-		ThisItem->HighlightActor();
-	}
-	
-	if (LastItem)
-	{
-		LastItem->UnHighlightActor();
-	}
+	if (ThisItem) { ThisItem->HighlightActor(); }
+	if (LastItem) { LastItem->UnHighlightActor(); }
 }
 
-void AThirdPersonController::TraceForCharacter()
+bool AThirdPersonController::PerformCharacterTrace(FHitResult& CharacterHitResult)
 {
-	if (!IsValid(GEngine) || !IsValid(GEngine->GameViewport)) return;
+	if (!IsValid(GEngine) || !IsValid(GEngine->GameViewport)) return true;
 	FVector2D ViewportSize;
 	GEngine->GameViewport->GetViewportSize(ViewportSize);
 	const FVector2D ViewportCenter = ViewportSize / 2.f;
 	FVector TraceStart;
 	FVector Forward;
-	if (!UGameplayStatics::DeprojectScreenToWorld(this, ViewportCenter, TraceStart, Forward)) return;
+	if (!UGameplayStatics::DeprojectScreenToWorld(this, ViewportCenter, TraceStart, Forward)) return true;
 
 	const FVector TraceEnd = TraceStart + Forward * TraceLength;
-	FHitResult CharacterHitResult;
 	GetWorld()->LineTraceSingleByChannel(CharacterHitResult, TraceStart, TraceEnd, HighlightTraceChannel);
+	return false;
+}
+void AThirdPersonController::TraceForCharacter()
+{
+	FHitResult CharacterHitResult;
+	if (PerformCharacterTrace(CharacterHitResult)) return;
 
 	LastCharacter = ThisCharacter;
 	ThisCharacter = CharacterHitResult.GetActor();
 
 	if (ThisCharacter == LastCharacter) return;
-
-	if (ThisCharacter)
-	{
-		ThisCharacter->HighlightActor();
-	}
-
-	if (LastCharacter)
-	{
-		LastCharacter->UnHighlightActor();
-	}
+	if (ThisCharacter) { ThisCharacter->HighlightActor(); }
+	if (LastCharacter) { LastCharacter->UnHighlightActor(); }
 }
 
 void AThirdPersonController::Interact()

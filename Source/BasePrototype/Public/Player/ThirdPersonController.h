@@ -19,7 +19,9 @@ public:
 protected:
 	virtual void SetupInputComponent() override;
 	virtual void Tick(float DeltaSeconds) override;
+	bool PerformLineTraceForItem(FHitResult& ItemHitResult);
 	void TraceForItem();
+	bool PerformCharacterTrace(FHitResult& CharacterHitResult);
 	void TraceForCharacter();
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
 	double TraceLength;
