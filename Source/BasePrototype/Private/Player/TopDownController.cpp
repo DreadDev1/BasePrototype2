@@ -85,7 +85,6 @@ void ATopDownController::CursorTraceItem()
 		{
 			// Case B
 			ThisItem->HighlightActor();
-			UE_LOG(LogTemp, Warning, TEXT("Started tracing a new Actor."))
 		}
 		else
 		{
@@ -98,7 +97,6 @@ void ATopDownController::CursorTraceItem()
 		{
 			// Case C
 			LastItem->UnHighlightActor();
-			UE_LOG(LogTemp, Warning, TEXT("Stopped tracing a new Actor."))
 		}
 		else // both actors are valid
 		{
