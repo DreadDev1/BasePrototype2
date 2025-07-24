@@ -20,6 +20,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Items|Scene")
+	USceneComponent* SceneComponent;
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Items|Mesh")
 	UStaticMeshComponent* ItemMesh;
 };

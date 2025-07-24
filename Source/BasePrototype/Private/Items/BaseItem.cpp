@@ -5,12 +5,12 @@
 
 #include "BasePrototype/BasePrototype.h"
 
-
 // Sets default values
 ABaseItem::ABaseItem()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("ItemMesh");
+	RootComponent = ItemMesh;
 }
 
 void ABaseItem::HighlightActor()
