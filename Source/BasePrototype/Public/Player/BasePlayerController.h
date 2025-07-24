@@ -28,8 +28,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
 	TEnumAsByte<ECollisionChannel> ItemTraceChannel;
 	
-	TScriptInterface<IHighlightInterface> LastActor;
-	TScriptInterface<IHighlightInterface> ThisActor;
+	TScriptInterface<IHighlightInterface> ThisItem;
+	TScriptInterface<IHighlightInterface> LastItem;
+	// Character trace variables
+	TScriptInterface<IHighlightInterface> ThisCharacter;
+	TScriptInterface<IHighlightInterface> LastCharacter;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Widgets|HUD")
 	TSubclassOf<UBaseHUD> HUDWidgetClass;

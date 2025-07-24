@@ -20,5 +20,6 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 	
-	void CursorTrace();
+	void CursorTraceCharacter();
+	void CursorTraceItem();
 };

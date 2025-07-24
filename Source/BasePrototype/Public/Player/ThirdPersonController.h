@@ -23,11 +23,6 @@ protected:
 	void TraceForCharacter();
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|TraceChannels")
 	double TraceLength;
-	TScriptInterface<IHighlightInterface> ThisActor;
-	TScriptInterface<IHighlightInterface> LastActor;
-	// Character trace variables
-	TScriptInterface<IHighlightInterface> ThisCharacter;
-	TScriptInterface<IHighlightInterface> LastCharacter;
 
 private:
 

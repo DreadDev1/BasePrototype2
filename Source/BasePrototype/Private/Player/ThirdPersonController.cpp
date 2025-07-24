@@ -41,20 +41,20 @@ void AThirdPersonController::TraceForItem()
 	FHitResult ItemHitResult;
 	GetWorld()->LineTraceSingleByChannel(ItemHitResult, TraceStart, TraceEnd, ItemTraceChannel);
 
-	LastActor = ThisActor;
-	ThisActor = ItemHitResult.GetActor();
+	LastItem = ThisItem;
+	ThisItem = ItemHitResult.GetActor();
 
-	if (ThisActor == LastActor) return;
+	if (ThisItem == LastItem) return;
 	
-	if (ThisActor)
+	if (ThisItem)
 	{
-		ThisActor->HighlightActor();
+		ThisItem->HighlightActor();
 		UE_LOG(LogTemp, Warning, TEXT("Found actor implementing HighlightInterface"));
 	}
 	
-	if (LastActor)
+	if (LastItem)
 	{
-		LastActor->UnHighlightActor();
+		LastItem->UnHighlightActor();
 		UE_LOG(LogTemp, Warning, TEXT("Stopped tracing last actor."))
 	}
 }

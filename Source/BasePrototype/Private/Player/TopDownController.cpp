@@ -21,38 +21,25 @@ void ATopDownController::BeginPlay()
 void ATopDownController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	CursorTrace();
+	CursorTraceCharacter();
+	CursorTraceItem();
 }
 
-void ATopDownController::CursorTrace()
+void ATopDownController::CursorTraceCharacter()
 {
 	FHitResult CursorHit;
 	GetHitResultUnderCursor(HighlightTraceChannel, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
-	LastActor = ThisActor;
-	ThisActor = CursorHit.GetActor();
+	LastCharacter = ThisCharacter;
+	ThisCharacter = CursorHit.GetActor();
 
-	/**
-	 * Line trace from cursor. There are several scenarios:
-	 *  A. LastActor is null && ThisActor is null
-	 *		- Do nothing
-	 *	B. LastActor is null && ThisActor is valid
-	 *		- Highlight ThisActor
-	 *	C. LastActor is valid && ThisActor is null
-	 *		- UnHighlight LastActor
-	 *	D. Both actors are valid, but LastActor != ThisActor
-	 *		- UnHighlight LastActor, and Highlight ThisActor
-	 *	E. Both actors are valid, and are the same actor
-	 *		- Do nothing
-	 */
-
-	if (LastActor == nullptr)
+	if (LastCharacter == nullptr)
 	{
-		if (ThisActor != nullptr)
+		if (ThisCharacter != nullptr)
 		{
 			// Case B
-			ThisActor->HighlightActor();
+			ThisCharacter->HighlightActor();
 		}
 		else
 		{
@@ -61,18 +48,65 @@ void ATopDownController::CursorTrace()
 	}
 	else // LastActor is valid
 	{
-		if (ThisActor == nullptr)
+		if (ThisCharacter == nullptr)
 		{
 			// Case C
-			LastActor->UnHighlightActor();
+			LastCharacter->UnHighlightActor();
 		}
 		else // both actors are valid
 		{
-			if (LastActor != ThisActor)
+			if (LastCharacter != ThisCharacter)
 			{
 				// Case D
-				LastActor->UnHighlightActor();
-				ThisActor->HighlightActor();
+				LastCharacter->UnHighlightActor();
+				ThisCharacter->HighlightActor();
+			}
+			else
+			{
+				// Case E - do nothing
+			}
+		}
+	}
+}
+
+void ATopDownController::CursorTraceItem()
+{
+	FHitResult CursorHitItem;
+	GetHitResultUnderCursor(ItemTraceChannel, false, CursorHitItem);
+	if (!CursorHitItem.bBlockingHit && LastItem == nullptr) return;
+	
+	LastItem = ThisItem;
+	ThisItem = CursorHitItem.GetActor();
+
+
+	if (LastItem == nullptr)
+	{
+		if (ThisItem!= nullptr)
+		{
+			// Case B
+			ThisItem->HighlightActor();
+			UE_LOG(LogTemp, Warning, TEXT("Started tracing a new Actor."))
+		}
+		else
+		{
+			
+		}
+	}
+	else // LastActor is valid
+	{
+		if (ThisItem == nullptr)
+		{
+			// Case C
+			LastItem->UnHighlightActor();
+			UE_LOG(LogTemp, Warning, TEXT("Stopped tracing a new Actor."))
+		}
+		else // both actors are valid
+		{
+			if (LastItem != ThisItem)
+			{
+				// Case D
+				LastItem->UnHighlightActor();
+				ThisItem->HighlightActor();
 			}
 			else
 			{
