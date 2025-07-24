@@ -14,9 +14,11 @@ class BASEPROTOTYPE_API ATopDownCharacter : public ABaseCharacter
 public:
 
 	ATopDownCharacter();
-	//virtual void Tick(float DeltaTime) override;
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 protected:
 
-public:
+private:
+	void InitAbilityActorInfo();
 	
 };

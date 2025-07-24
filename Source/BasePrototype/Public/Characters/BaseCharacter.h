@@ -15,8 +15,12 @@ class BASEPROTOTYPE_API ABaseCharacter : public ACharacter, public IAbilitySyste
 	GENERATED_BODY()
 public:
 	ABaseCharacter();
+	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+
+
+	
 protected:
 	virtual void BeginPlay() override;
 

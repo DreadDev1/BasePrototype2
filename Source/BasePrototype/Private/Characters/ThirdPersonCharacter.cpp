@@ -4,8 +4,12 @@
 #include "Characters/ThirdPersonCharacter.h"
 
 #include "Camera/CameraComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "AbilitySystemComponent.h"
+#include "Player/BasePlayerState.h"
+
+class ABasePlayerState;
 
 AThirdPersonCharacter::AThirdPersonCharacter()
 {
@@ -24,4 +28,29 @@ AThirdPersonCharacter::AThirdPersonCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
+}
+
+void AThirdPersonCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	
+	// Init ability actor info for the Server
+	InitAbilityActorInfo();
+}
+
+void AThirdPersonCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	// Init ability actor info for the Client
+	InitAbilityActorInfo();
+}
+
+void AThirdPersonCharacter::InitAbilityActorInfo()
+{
+	ABasePlayerState* BasePlayerState = GetPlayerState<ABasePlayerState>();
+	check(BasePlayerState);
+	BasePlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(BasePlayerState, this);
+	AbilitySystemComponent = BasePlayerState->GetAbilitySystemComponent();
+	AttributeSet = BasePlayerState->GetAttributeSet();
 }
