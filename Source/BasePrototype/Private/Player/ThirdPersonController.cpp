@@ -48,7 +48,7 @@ void AThirdPersonController::TraceForItem()
 	
 	if (ThisItem)
 	{
-		ThisItem->HighlightActor()
+		ThisItem->HighlightActor();
 	}
 	
 	if (LastItem)
