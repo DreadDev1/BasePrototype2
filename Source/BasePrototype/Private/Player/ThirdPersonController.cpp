@@ -48,14 +48,12 @@ void AThirdPersonController::TraceForItem()
 	
 	if (ThisItem)
 	{
-		ThisItem->HighlightActor();
-		UE_LOG(LogTemp, Warning, TEXT("Found actor implementing HighlightInterface"));
+		ThisItem->HighlightActor()
 	}
 	
 	if (LastItem)
 	{
 		LastItem->UnHighlightActor();
-		UE_LOG(LogTemp, Warning, TEXT("Stopped tracing last actor."))
 	}
 }
 
@@ -81,13 +79,11 @@ void AThirdPersonController::TraceForCharacter()
 	if (ThisCharacter)
 	{
 		ThisCharacter->HighlightActor();
-		UE_LOG(LogTemp, Warning, TEXT("Started tracing current character."))
 	}
 
 	if (LastCharacter)
 	{
 		LastCharacter->UnHighlightActor();
-		UE_LOG(LogTemp, Warning, TEXT("Stopped tracing last character."))
 	}
 }
 
