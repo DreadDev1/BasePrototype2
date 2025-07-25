@@ -9,7 +9,6 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-class UBaseHUD;
 class IHighlightInterface;
 
 UCLASS()
@@ -34,15 +33,7 @@ protected:
 	TScriptInterface<IHighlightInterface> ThisCharacter;
 	TScriptInterface<IHighlightInterface> LastCharacter;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Widgets|HUD")
-	TSubclassOf<UBaseHUD> HUDWidgetClass;
-
-	UPROPERTY()
-	TObjectPtr<UBaseHUD> HUDWidget;
-	
 private:
-
-	void CreateHUDWidget();
    	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Inputs|Input Mapping Context")
    	TArray<TObjectPtr<UInputMappingContext>> DefaultIMCs;
    	

@@ -4,7 +4,6 @@
 #include "Player/BasePlayerController.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Widgets/HUD/BaseHUD.h"
 
 ABasePlayerController::ABasePlayerController()
 {
@@ -25,7 +24,6 @@ void ABasePlayerController::BeginPlay()
 	{
 		for (UInputMappingContext* CurrentContext : DefaultIMCs) { Subsystem->AddMappingContext(CurrentContext, 0); }
 	}
-	CreateHUDWidget();
 }
 
 void ABasePlayerController::SetupInputComponent()
@@ -35,16 +33,6 @@ void ABasePlayerController::SetupInputComponent()
 	
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABasePlayerController::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABasePlayerController::Look);
-}
-
-void ABasePlayerController::CreateHUDWidget()
-{
-	if (!IsLocalController()) return;
-	HUDWidget = CreateWidget<UBaseHUD>(this, HUDWidgetClass);
-	if (IsValid(HUDWidget))
-	{
-		HUDWidget->AddToViewport();
-	}
 }
 
 void ABasePlayerController::Move(const FInputActionValue& InputActionValue)

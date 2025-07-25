@@ -6,11 +6,20 @@
 #include "GameFramework/HUD.h"
 #include "BaseHUD.generated.h"
 
-/**
- * 
- */
+class UBaseUserWidget;
 UCLASS()
 class BASEPROTOTYPE_API ABaseHUD : public AHUD
 {
 	GENERATED_BODY()
+	
+	UPROPERTY()
+	TObjectPtr<UBaseUserWidget>  OverlayWidget;
+
+protected:
+	virtual void BeginPlay() override;
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UBaseUserWidget> OverlayWidgetClass;
 };
