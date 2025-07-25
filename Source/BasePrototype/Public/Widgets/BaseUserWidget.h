@@ -6,6 +6,9 @@
 #include "Blueprint/UserWidget.h"
 #include "BaseUserWidget.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
 class BASEPROTOTYPE_API UBaseUserWidget : public UUserWidget
 {

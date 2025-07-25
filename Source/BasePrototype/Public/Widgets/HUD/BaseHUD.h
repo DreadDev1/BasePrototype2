@@ -3,20 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "GameFramework/HUD.h"
 #include "BaseHUD.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BASEPROTOTYPE_API UBaseHUD : public UUserWidget
+class BASEPROTOTYPE_API ABaseHUD : public AHUD
 {
 	GENERATED_BODY()
-public:
-	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
-	void ShowPickupMessage(const FString& Message);
-
-	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
-	void HidePickupMessage();
 };
