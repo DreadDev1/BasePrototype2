@@ -2,3 +2,9 @@
 
 
 #include "Widgets/BaseUserWidget.h"
+
+void UBaseUserWidget::SetWidgetController(UObject* InWidgetController)
+{
+	WidgetController = InWidgetController;
+	WidgetControllerSet();
+}
