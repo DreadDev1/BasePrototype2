@@ -6,7 +6,9 @@
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/BasePlayerController.h"
 #include "Player/BasePlayerState.h"
+#include "Widgets/HUD/BaseHUD.h"
 
 
 class ABasePlayerState;
@@ -53,4 +55,12 @@ void ATopDownCharacter::InitAbilityActorInfo()
 	BasePlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(BasePlayerState, this);
 	AbilitySystemComponent = BasePlayerState->GetAbilitySystemComponent();
 	AttributeSet = BasePlayerState->GetAttributeSet();
+
+	if (ABasePlayerController* BasePlayerController = Cast<ABasePlayerController>(GetController()))
+	{
+		if (ABaseHUD* BaseHUD = Cast<ABaseHUD>(BasePlayerController->GetHUD()))
+		{
+			BaseHUD->InitOverlay(BasePlayerController, BasePlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
