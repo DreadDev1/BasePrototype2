@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿	// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -7,6 +7,7 @@
 #include "Interaction/HighlightInterface.h"
 #include "BaseItem.generated.h"
 
+class UGameplayEffect;
 UCLASS()
 class BASEPROTOTYPE_API ABaseItem : public AActor, public IHighlightInterface
 {
@@ -20,8 +21,36 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable, Category = "Base Prototype|Items|Applied Effects")
+	void ApplyInstantEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+	UPROPERTY(EditAnywhere, Category = "Base Prototype|Items|Applied Effects")
+	TSubclassOf<UGameplayEffect> InstantGameplayEffect;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/** Highlight Interface Implementation */
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Items|Scene")
 	USceneComponent* SceneComponent;
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Items|Mesh")
 	UStaticMeshComponent* ItemMesh;
+	/** Highlight Interface Implementation */
 };
