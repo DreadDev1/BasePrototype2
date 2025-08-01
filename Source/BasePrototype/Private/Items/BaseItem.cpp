@@ -2,10 +2,6 @@
 
 
 #include "Items/BaseItem.h"
-
-#include "AbilitySystemBlueprintLibrary.h"
-#include "AbilitySystem/BaseAbilitySystemComponent.h"
-
 #include "BasePrototype/BasePrototype.h"
 
 // Sets default values
@@ -21,19 +17,6 @@ void ABaseItem::BeginPlay()
 	
 }
 
-void ABaseItem::ApplyInstantEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass)
-{
-	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
-	if (TargetASC == nullptr) return; 
-
-	check(GameplayEffectClass);
-	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
-	EffectContextHandle.AddSourceObject(this);
-	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.f, EffectContextHandle);
-	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
-}
-
-
 void ABaseItem::HighlightActor()
 {
 	ItemMesh->SetRenderCustomDepth(true);
@@ -43,3 +26,10 @@ void ABaseItem::UnHighlightActor()
 {
 	ItemMesh->SetRenderCustomDepth(false);
 }
+
+void ABaseItem::OnOverlap(AActor* TargetActor)
+{
+	ApplyEffectToTarget(TargetActor, InstantGameplayEffect);
+	ApplyEffectToTarget(TargetActor, DurationGameplayEffect);
+}
+

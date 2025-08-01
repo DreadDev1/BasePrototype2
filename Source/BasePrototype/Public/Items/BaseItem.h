@@ -3,13 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Actors/EffectsActor.h"
 #include "GameFramework/Actor.h"
 #include "Interaction/HighlightInterface.h"
 #include "BaseItem.generated.h"
 
 class UGameplayEffect;
+
 UCLASS()
-class BASEPROTOTYPE_API ABaseItem : public AActor, public IHighlightInterface
+class BASEPROTOTYPE_API ABaseItem : public AEffectsActor, public IHighlightInterface
 {
 	GENERATED_BODY()
 
@@ -20,32 +22,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable, Category = "Base Prototype|Items|Applied Effects")
-	void ApplyInstantEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass);
-	UPROPERTY(EditAnywhere, Category = "Base Prototype|Items|Applied Effects")
-	TSubclassOf<UGameplayEffect> InstantGameplayEffect;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	virtual void OnOverlap(AActor* TargetActor) override;
 
 	/** Highlight Interface Implementation */
 	UPROPERTY(EditDefaultsOnly, Category = "Base Prototype|Items|Scene")
